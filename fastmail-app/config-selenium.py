@@ -5,7 +5,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import sys
-
+import importlib
 
 login = sys.argv[1] 
 password = sys.argv[2]
@@ -17,6 +17,7 @@ class Email:
     time = ''
     content = ''
 
+
 def driver_return(url):
     #config
     options = webdriver.ChromeOptions()
@@ -26,6 +27,7 @@ def driver_return(url):
     driver.get(url)
     return driver
 
+
 def login_to_website(driver):
     #login to website
     login_element = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, "v16-input")))
@@ -34,6 +36,7 @@ def login_to_website(driver):
     password_element.send_keys(password)
     button_confirm_credentials = driver.find_element_by_class_name("v-Button--constructive")
     button_confirm_credentials.click()
+
 
 def get_emails_and_content(driver):
     #get emails
@@ -69,10 +72,8 @@ def get_emails_and_content(driver):
     return emails_objects_array
 
 
-def exec():
+def sele_exec():
     driver = driver_return('https://www.fastmail.com/login/')
     login_to_website(driver)
     return get_emails_and_content(driver)
 
-
-exec()
