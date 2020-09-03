@@ -61,6 +61,7 @@ def get_emails_and_content(driver):
                     email_object.sender = get_sender[0].get_attribute('title')
 
         email.click()
+        WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.XPATH , "//*[contains(@class, 'u-article')]")))
         content = driver.find_element_by_xpath("//*[contains(@class, 'u-article')]")
         cont = content.get_attribute('innerHTML')
         email_object.content = cont
@@ -68,11 +69,10 @@ def get_emails_and_content(driver):
     return emails_objects_array
 
 
-def main():
+def exec():
     driver = driver_return('https://www.fastmail.com/login/')
     login_to_website(driver)
-    emails_array = get_emails_and_content(driver)
+    return get_emails_and_content(driver)
 
-if __name__ == "__main__":
-    main()
 
+exec()
