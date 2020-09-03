@@ -11,14 +11,11 @@ login = sys.argv[1]
 password = sys.argv[2]
 
 class Email:
-    def __init__(self, sender, subject, number, year, month, day, time):
-        self.sender = sender
-        self.subject = subject
-        self.number = number
-        self.year = year
-        self.month = month
-        self.day = day
-        self.time = time
+    sender = ''
+    subject = ''
+    number = 0
+    time = ''
+    content = ''
 
 def driver_return(url):
     #config
@@ -40,37 +37,42 @@ def login_to_website(driver):
 
 def get_emails_and_content(driver):
     #get emails
-    WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, "v35")))
-    email_container_element = driver.find_element_by_id('v35')
+    emails_objects_array = []
+    WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CLASS_NAME , "app-list")))
+    email_container_element = driver.find_element_by_class_name('app-list')
     emails_array = email_container_element.find_elements_by_tag_name('a')
 
     for email in emails_array:
-        div_email_element = email.find_elements_by_tag_name('div')
-        for email_part in div_email_element:
-            # if len( email_part.get_attribute('title') ) > 0:
-            #     print(email_part.get_attribute('title'))
-            #get sender
-            if email_part.get_attribute('class') == "v-MailboxItem-from":
-                # mail_from = email_part.find_element_by_class_name("v-MailboxItem-from")
-                mail_from = email_part.find_element_by_class_xpath()
-                print(mail_from)
+        email.click()
+        email_object = Email()
+        div_email_elements = email.find_elements_by_tag_name('div')
+        for div in div_email_elements:
 
-            # inside_div_content = email_part.find_elements_by_class_name("v-MailboxItem-from")
-            # print(inside_div_content)
-            # for inside in inside_div_content:
-            #     print('to co mamy inside: ' + inside)
-            #     span = inside.find_elements_by_class_name('v-MailboxItem-name')
-            #     sender = span.get_attribute('title')
-            #     print( sender )
+            if div.get_attribute('class') == "v-MailboxItem-subject u-ellipsis":
+                email_object.subject = div.get_attribute('title')
+            
+            if div.get_attribute('class') == "v-MailboxItem-time":
+                email_object.time = div.get_attribute('title')
+            
+            inside_div = div.find_elements_by_tag_name('span')
+            for span in inside_div:
+                if span.get_attribute('class') == "v-MailboxItem-name":
+                    get_sender = span.find_elements_by_tag_name('span')
+                    email_object.sender = get_sender[0].get_attribute('title')
+
+        email.click()
+        content = driver.find_element_by_xpath("//*[contains(@class, 'u-article')]")
+        cont = content.get_attribute('innerHTML')
+        email_object.content = cont
+        emails_objects_array.append(email_object)
+    return emails_objects_array
 
 
 def main():
     driver = driver_return('https://www.fastmail.com/login/')
     login_to_website(driver)
-    get_emails_and_content(driver)
-
+    emails_array = get_emails_and_content(driver)
 
 if __name__ == "__main__":
-    # execute only if run as a script
     main()
 
