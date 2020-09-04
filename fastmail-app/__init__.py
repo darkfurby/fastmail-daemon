@@ -1,5 +1,5 @@
 from flask import Flask
-from . import config-selenium
+from .config_selenium import sele_exec
 
 app = Flask(__name__, instance_relative_config=True)
 

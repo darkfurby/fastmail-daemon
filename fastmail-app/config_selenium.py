@@ -6,9 +6,10 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import sys
 import importlib
+import os
 
-login = sys.argv[1] 
-password = sys.argv[2]
+login = os.environ.get('LOGIN')
+password = os.environ.get('PASSWORD')
 
 class Email:
     sender = ''
@@ -95,4 +96,3 @@ def sele_exec():
     return get_emails_and_content(driver)
     driver.close()
 
-sele_exec()
