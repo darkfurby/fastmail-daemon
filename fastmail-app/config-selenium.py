@@ -45,7 +45,7 @@ def get_emails_and_content(driver):
     WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CLASS_NAME , "app-list")))
     email_container_element = driver.find_element_by_class_name('app-list')
     emails_array = email_container_element.find_elements_by_tag_name('a')
-    # print("liczba maili ktore zgarnal" + str( len(emails_array) ))
+    print("liczba maili ktore zgarnal" + str( len(emails_array) ))
 
     for email in emails_array:
         # print( email.get_attribute('id') )
