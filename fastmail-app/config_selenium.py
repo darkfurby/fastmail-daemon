@@ -24,8 +24,9 @@ def driver_return(url):
     options = webdriver.ChromeOptions()
     options.add_argument('--headless')
     options.add_argument('--window-size=1920,1080')
-    driver = webdriver.Chrome('../driver/chromedriver', options=options)
-    # driver = webdriver.Chrome('../driver/chromedriver')
+    driver = webdriver.Chrome(executable_path='./driver/chromedriver', options=options)
+    # driver = webdriver.Chrome(executable_path='../driver/chromedriver', options=options)
+    # driver = webdriver.Chrome(options=options)
     driver.get(url)
     return driver
 
