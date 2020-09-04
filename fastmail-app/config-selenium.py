@@ -48,6 +48,7 @@ def get_emails_and_content(driver):
     for email in emails_array:
         email.click()
         email_object = Email()
+        
         div_email_elements = email.find_elements_by_tag_name('div')
         for div in div_email_elements:
 
@@ -56,11 +57,18 @@ def get_emails_and_content(driver):
             
             if div.get_attribute('class') == "v-MailboxItem-time":
                 email_object.time = div.get_attribute('title')
-            
+
             inside_div = div.find_elements_by_tag_name('span')
             for span in inside_div:
                 if span.get_attribute('class') == "v-MailboxItem-name":
-                    get_sender = span.find_elements_by_tag_name('span')
+                    attempts = 0
+                    while(attempts < 3):
+                        try:
+                            get_sender = span.find_elements_by_tag_name('span')
+                            break
+                        except StaleElementException:
+                            print("nie widzi elementu")
+
                     email_object.sender = get_sender[0].get_attribute('title')
 
         email.click()
@@ -77,3 +85,5 @@ def sele_exec():
     login_to_website(driver)
     return get_emails_and_content(driver)
 
+
+sele_exec()
