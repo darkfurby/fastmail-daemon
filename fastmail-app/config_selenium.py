@@ -7,6 +7,7 @@ from selenium.webdriver.support import expected_conditions as EC
 import sys
 import importlib
 import os
+import random
 
 login = os.environ.get('LOGIN')
 password = os.environ.get('PASSWORD')
@@ -50,7 +51,7 @@ def get_emails_and_content(driver):
     print("liczba maili ktore zgarnal" + str( len(emails_array) ))
 
     for email in emails_array:
-        # print( email.get_attribute('id') )
+ 
         email.click()
         email_object = Email()
         
@@ -91,11 +92,20 @@ def save_emails_as_files(emails_array):
     mailbox_folder = "mailbox"
     if not os.path.exists(mailbox_folder):
         os.makedirs(mailbox_folder)
-    # for item in emails_array:
 
+    for item in emails_array:
+        filename = item.sender + "-" + item.subject
 
-
-
+        if os.path.isfile("./" + mailbox_folder + "/" + filename):
+            extra_number = random.getrandbits(32)
+            f = open(mailbox_folder + "/" + filename + "[-" + str(extra_number) + "]", "w")
+            f.write(item.content)
+            f.close()
+        else:
+            f = open(mailbox_folder + "/" + filename,"w")
+            f.write(item.content)
+            f.close()
+        
 
 def sele_exec():
     driver = driver_return('https://www.fastmail.com/login/')
@@ -103,7 +113,8 @@ def sele_exec():
     dawajListe = get_emails_and_content(driver)
     for i in dawajListe:
         print( i.sender + " " +  i.subject + " " + i.time + " " + i.content)
-    return get_emails_and_content(driver)
+    save_emails_as_files(dawajListe)
+    
     driver.close()
 
 sele_exec()
