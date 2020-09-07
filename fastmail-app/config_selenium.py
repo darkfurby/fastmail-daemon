@@ -24,8 +24,8 @@ def driver_return(url):
     options = webdriver.ChromeOptions()
     options.add_argument('--headless')
     options.add_argument('--window-size=1920,1080')
-    driver = webdriver.Chrome(executable_path='./driver/chromedriver', options=options)
-    # driver = webdriver.Chrome(executable_path='../driver/chromedriver', options=options)
+    # driver = webdriver.Chrome(executable_path='./driver/chromedriver', options=options)
+    driver = webdriver.Chrome(executable_path='../driver/chromedriver', options=options)
     # driver = webdriver.Chrome(options=options)
     driver.get(url)
     return driver
@@ -87,6 +87,15 @@ def get_emails_and_content(driver):
         emails_objects_array.append(email_object)
     return emails_objects_array
 
+def save_emails_as_files(emails_array):
+    mailbox_folder = "mailbox"
+    if not os.path.exists(mailbox_folder):
+        os.makedirs(mailbox_folder)
+    # for item in emails_array:
+
+
+
+
 
 def sele_exec():
     driver = driver_return('https://www.fastmail.com/login/')
@@ -97,3 +106,4 @@ def sele_exec():
     return get_emails_and_content(driver)
     driver.close()
 
+sele_exec()

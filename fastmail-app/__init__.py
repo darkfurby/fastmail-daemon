@@ -15,9 +15,5 @@ def download_emails():
 
 @app.route('/mailbox')
 def mailbox():
-<<<<<<< HEAD
     return 
-=======
-    return ''
->>>>>>> 825c6f8786c82366a1a0860aaeb033270f2977b9
     
