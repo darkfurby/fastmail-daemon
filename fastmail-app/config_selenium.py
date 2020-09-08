@@ -8,6 +8,7 @@ import sys
 import importlib
 import os
 import random
+import glob
 
 login = os.environ.get('LOGIN')
 password = os.environ.get('PASSWORD')
@@ -105,16 +106,26 @@ def save_emails_as_files(emails_array):
             f = open(mailbox_folder + "/" + filename,"w")
             f.write(item.content)
             f.close()
-        
+
+def clear_mailbox():
+    folder = glob.glob('mailbox/*')
+    for f in folder:
+        os.remove(f)
 
 def sele_exec():
-    driver = driver_return('https://www.fastmail.com/login/')
-    login_to_website(driver)
-    dawajListe = get_emails_and_content(driver)
-    for i in dawajListe:
-        print( i.sender + " " +  i.subject + " " + i.time + " " + i.content)
-    save_emails_as_files(dawajListe)
-    
-    driver.close()
+    while True:
+        try:
+            driver = driver_return('https://www.fastmail.com/login/')
+            login_to_website(driver)
+            dawajListe = get_emails_and_content(driver)
+            for i in dawajListe:
+                print( i.sender + " " +  i.subject + " " + i.time + " " + i.content)
+            save_emails_as_files(dawajListe)
+            driver.close()
+            break
+        except StaleElementException:
+            print("this run failed, let me try again")
+
+
 
 sele_exec()
