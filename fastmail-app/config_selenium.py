@@ -115,6 +115,7 @@ def clear_mailbox():
 def sele_exec():
     while True:
         try:
+            clear_mailbox()
             driver = driver_return('https://www.fastmail.com/login/')
             login_to_website(driver)
             dawajListe = get_emails_and_content(driver)
@@ -123,7 +124,7 @@ def sele_exec():
             save_emails_as_files(dawajListe)
             driver.close()
             break
-        except StaleElementException:
+        except:
             print("this run failed, let me try again")
 
 
