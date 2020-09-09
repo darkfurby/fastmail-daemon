@@ -23,12 +23,16 @@ class Email:
 
 def driver_return(url):
     #config
+    print("***def driver_return")
     options = webdriver.ChromeOptions()
+    options.add_argument('--no-sandbox')
     options.add_argument('--headless')
     options.add_argument('--window-size=1920,1080')
+    print("zalokowalem optionsy")
     # driver = webdriver.Chrome(executable_path='./driver/chromedriver', options=options)
-    driver = webdriver.Chrome(executable_path='../driver/chromedriver', options=options)
+    driver = webdriver.Chrome(executable_path='/root/fastmail-daemon/fastmail-app/chromedriver', options=options)
     # driver = webdriver.Chrome(options=options)
+    print("ustawilem drivera")
     driver.get(url)
     return driver
 
@@ -115,9 +119,12 @@ def clear_mailbox():
 def sele_exec():
     while True:
         try:
+            print(login + " " + password)
             clear_mailbox()
             driver = driver_return('https://www.fastmail.com/login/')
+            print("zalokowalem drivera")
             login_to_website(driver)
+            print("uruchomilem logowanie")
             dawajListe = get_emails_and_content(driver)
             for i in dawajListe:
                 print( i.sender + " " +  i.subject + " " + i.time + " " + i.content)
@@ -126,7 +133,5 @@ def sele_exec():
             break
         except:
             print("this run failed, let me try again")
-
-
 
 sele_exec()
