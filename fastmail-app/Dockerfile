@@ -13,7 +13,7 @@ RUN apt update --yes;
 
 
 
-ENV HOME /home/dupa
+ENV HOME /home/apka
 
 WORKDIR ${HOME}
 
