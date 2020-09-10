@@ -1,6 +1,5 @@
 FROM ubuntu:20.04
 
-#update upgrade and install git,nginx
 RUN apt-get update --yes && apt-get install --yes;
 RUN apt install wget --yes;
 RUN apt install curl gnupg2 ca-certificates lsb-release --yes;
@@ -10,8 +9,6 @@ RUN curl -fsSL https://nginx.org/keys/nginx_signing.key | apt-key add -;
 RUN apt install nginx --yes;
 RUN apt install git --yes;
 RUN apt update --yes;
-
-
 
 ENV HOME /home/apka
 
@@ -34,10 +31,7 @@ WORKDIR ${HOME}/fastmail-daemon/fastmail-app/
 
 RUN chmod -R 777 ${HOME}/fastmail-daemon
 
-#COPY default.conf /etc/nginx/conf.d/
-
 COPY default /etc/nginx/sites-enabled/
-# RUN usermod -a -G root nginx
 
 EXPOSE 80
 

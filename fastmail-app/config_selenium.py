@@ -22,23 +22,19 @@ class Email:
 
 
 def driver_return(url):
-    #config
     print("***def driver_return")
     options = webdriver.ChromeOptions()
     options.add_argument('--no-sandbox')
     options.add_argument('--headless')
     options.add_argument('--window-size=1920,1080')
     print("zalokowalem optionsy")
-    # driver = webdriver.Chrome(executable_path='./driver/chromedriver', options=options)
     driver = webdriver.Chrome(executable_path='/home/apka/fastmail-daemon/fastmail-app/chromedriver', options=options)
-    # driver = webdriver.Chrome(options=options)
     print("ustawilem drivera")
     driver.get(url)
     return driver
 
 
 def login_to_website(driver):
-    #login to website
     login_element = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, "v16-input")))
     password_element = driver.find_element_by_id("v17-input")
     login_element.send_keys(login)
@@ -48,7 +44,6 @@ def login_to_website(driver):
 
 
 def get_emails_and_content(driver):
-    #get emails
     emails_objects_array = []
     WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CLASS_NAME , "app-list")))
     email_container_element = driver.find_element_by_class_name('app-list')
@@ -85,7 +80,7 @@ def get_emails_and_content(driver):
                     email_object.sender = get_sender[0].get_attribute('title')
                     
 
-        # email.click()
+        
         WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.XPATH , "//*[contains(@class, 'u-article')]")))
         content = driver.find_element_by_xpath("//*[contains(@class, 'u-article')]")
         cont = content.get_attribute('innerHTML')
