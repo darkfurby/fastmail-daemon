@@ -30,7 +30,7 @@ def driver_return(url):
     options.add_argument('--window-size=1920,1080')
     print("zalokowalem optionsy")
     # driver = webdriver.Chrome(executable_path='./driver/chromedriver', options=options)
-    driver = webdriver.Chrome(executable_path='/root/fastmail-daemon/fastmail-app/chromedriver', options=options)
+    driver = webdriver.Chrome(executable_path='/home/dupa/fastmail-daemon/fastmail-app/chromedriver', options=options)
     # driver = webdriver.Chrome(options=options)
     print("ustawilem drivera")
     driver.get(url)

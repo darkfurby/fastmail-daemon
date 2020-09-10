@@ -7,7 +7,7 @@ set -m
 nginx -g "daemon off;" &
   
 # Start the helper process
-python3 /root/fastmail-daemon/fastmail-app/config_selenium.py >> config_selenium.output
+python3 /home/dupa/fastmail-daemon/fastmail-app/config_selenium.py >> config_selenium.output
   
 # the my_helper_process might need to know how to wait on the
 # primary process to start before it does its work and returns

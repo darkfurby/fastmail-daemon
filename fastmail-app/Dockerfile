@@ -13,7 +13,7 @@ RUN apt update --yes;
 
 
 
-ENV HOME /root
+ENV HOME /home/dupa
 
 WORKDIR ${HOME}
 
@@ -34,9 +34,10 @@ WORKDIR ${HOME}/fastmail-daemon/fastmail-app/
 
 RUN chmod -R 777 ${HOME}/fastmail-daemon
 
-COPY default.conf /etc/nginx/conf.d/
+#COPY default.conf /etc/nginx/conf.d/
 
-RUN usermod -a -G root nginx
+COPY default /etc/nginx/sites-enabled/
+# RUN usermod -a -G root nginx
 
 EXPOSE 80
 
